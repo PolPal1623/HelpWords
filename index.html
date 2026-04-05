@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Французские слова для ориентации в пространстве</title>
+  <title>French Learning Suite · Пространственные слова</title>
   <style>
     :root {
       color-scheme: light dark;
@@ -82,6 +82,63 @@
       display: grid;
       gap: 14px;
       align-content: start;
+    }
+
+    .suite-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 6px 2px 2px;
+    }
+
+    .suite-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .suite-badge::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2563eb, #f97316);
+      box-shadow: 0 0 0 6px rgba(10, 132, 255, 0.12);
+    }
+
+    .suite-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .suite-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .suite-link:hover,
+    .suite-link:focus-visible {
+      background: var(--blue);
+      color: #fff;
+      outline: none;
+      transform: translateY(-1px);
     }
 
     .hero-card,
@@ -680,6 +737,13 @@
 </head>
 <body>
   <main class="app-shell">
+    <div class="suite-bar">
+      <a class="suite-badge" href="https://polpal1623.github.io/FrenchLibrary/">French Learning Suite</a>
+      <div class="suite-actions">
+        <a class="suite-link" href="https://polpal1623.github.io/FrenchLibrary/">Все приложения</a>
+        <a class="suite-link" href="https://github.com/PolPal1623/HelpWords">GitHub</a>
+      </div>
+    </div>
     <section class="hero-card fade-enter">
       <div class="hero-top">
         <div class="eyebrow">
@@ -690,7 +754,7 @@
       <h1>Ориентация в пространстве на французском</h1>
       <p class="hero-copy">
         10 раундов, 6 вариантов ответа, одна цель: быстро научиться узнавать французские слова по картинке.
-        Интерфейс на русском, ответы только на французском.
+        Интерфейс на русском, ответы только на французском, а весь тренажёр теперь оформлен в стиле French Learning Suite.
       </p>
       <div class="hero-metrics">
         <article class="metric">
@@ -725,11 +789,11 @@
         <div class="legend">
           <div class="legend-item">
             <span class="dot dot-blue"></span>
-            Синий персонаж
+            Синий маркер
           </div>
           <div class="legend-item">
             <span class="dot dot-orange"></span>
-            Оранжевый объект
+            Оранжевый ориентир
           </div>
         </div>
       </section>
@@ -762,7 +826,7 @@
         </div>
 
         <div class="status-card">
-          <p class="question-title" id="promptTitle">Определите положение синего персонажа относительно оранжевого.</p>
+          <p class="question-title" id="promptTitle">Определите положение синего маркера относительно оранжевого ориентира.</p>
           <p class="question-subtitle" id="promptSubtitle">После ответа появится короткое пояснение.</p>
         </div>
 
@@ -1074,127 +1138,182 @@
             <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(10,22,54,0.18)"/>
             </filter>
+            <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="rgba(10,22,54,0.12)"/>
+            </filter>
           </defs>
           <rect x="18" y="18" width="384" height="264" rx="32" fill="url(#sky)" stroke="rgba(127,138,157,0.18)"/>
-          <ellipse cx="210" cy="230" rx="126" ry="22" fill="rgba(81, 100, 131, 0.12)"/>
+          <rect x="42" y="60" width="336" height="168" rx="24" fill="rgba(255,255,255,0.22)" stroke="rgba(127,138,157,0.12)"/>
+          <path d="M60 228 H360" stroke="rgba(81, 100, 131, 0.18)" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="210" cy="234" rx="132" ry="20" fill="rgba(81, 100, 131, 0.10)"/>
       `;
 
       const end = `</svg>`;
 
-      const blueCharacter = (x, y, scale = 1, flip = false) => `
+      const blueMarker = (x, y, scale = 1, flip = false) => `
         <g transform="translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})" filter="url(#shadow)">
-          <ellipse cx="0" cy="48" rx="28" ry="8" fill="rgba(10, 132, 255, 0.18)"/>
-          <circle cx="0" cy="20" r="20" fill="url(#blueGrad)"/>
-          <circle cx="-7" cy="16" r="3" fill="#fff"/>
-          <circle cx="7" cy="16" r="3" fill="#fff"/>
-          <circle cx="-7" cy="16" r="1.2" fill="#10131a"/>
-          <circle cx="7" cy="16" r="1.2" fill="#10131a"/>
-          <path d="M-7 26 Q0 32 7 26" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.2" stroke-linecap="round"/>
-          <rect x="-12" y="40" width="24" height="26" rx="10" fill="url(#blueGrad)"/>
-          <rect x="-18" y="44" width="8" height="22" rx="4" fill="url(#blueGrad)"/>
-          <rect x="10" y="44" width="8" height="22" rx="4" fill="url(#blueGrad)"/>
+          <ellipse cx="0" cy="50" rx="24" ry="7" fill="rgba(10, 132, 255, 0.16)"/>
+          <path d="M0 4 C13 4 24 14 24 28 C24 46 10 58 0 68 C-10 58 -24 46 -24 28 C-24 14 -13 4 0 4 Z" fill="url(#blueGrad)" stroke="rgba(255,255,255,0.68)" stroke-width="2"/>
+          <circle cx="0" cy="28" r="12" fill="rgba(255,255,255,0.92)"/>
+          <text x="0" y="32" text-anchor="middle" font-size="13" font-weight="800" fill="#0a84ff" font-family="Arial, sans-serif">A</text>
         </g>
       `;
 
-      const orangeBlock = (x, y, w = 92, h = 70) => `
+      const orangeLandmark = (x, y, w = 92, h = 70) => `
         <g transform="translate(${x} ${y})" filter="url(#shadow)">
+          <ellipse cx="0" cy="${h / 2 + 10}" rx="${w / 2.2}" ry="10" fill="rgba(255, 159, 10, 0.14)"/>
           <rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="22" fill="url(#orangeGrad)"/>
           <rect x="${-w / 2 + 12}" y="${-h / 2 + 12}" width="${w - 24}" height="${h - 24}" rx="16" fill="rgba(255,255,255,0.16)"/>
+          <circle cx="0" cy="0" r="14" fill="rgba(255,255,255,0.94)"/>
+          <text x="0" y="5" text-anchor="middle" font-size="13" font-weight="800" fill="#ff9f0a" font-family="Arial, sans-serif">B</text>
         </g>
       `;
 
-      const orangeCharacter = (x, y, scale = 1, flip = false) => `
+      const orangeMarker = (x, y, scale = 1, flip = false) => `
         <g transform="translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})" filter="url(#shadow)">
-          <ellipse cx="0" cy="48" rx="28" ry="8" fill="rgba(255, 159, 10, 0.18)"/>
-          <circle cx="0" cy="20" r="20" fill="url(#orangeGrad)"/>
-          <circle cx="-7" cy="16" r="3" fill="#fff"/>
-          <circle cx="7" cy="16" r="3" fill="#fff"/>
-          <circle cx="-7" cy="16" r="1.2" fill="#10131a"/>
-          <circle cx="7" cy="16" r="1.2" fill="#10131a"/>
-          <path d="M-7 26 Q0 32 7 26" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.2" stroke-linecap="round"/>
-          <rect x="-12" y="40" width="24" height="26" rx="10" fill="url(#orangeGrad)"/>
-          <rect x="-18" y="44" width="8" height="22" rx="4" fill="url(#orangeGrad)"/>
-          <rect x="10" y="44" width="8" height="22" rx="4" fill="url(#orangeGrad)"/>
+          <ellipse cx="0" cy="50" rx="24" ry="7" fill="rgba(255, 159, 10, 0.16)"/>
+          <path d="M0 4 C13 4 24 14 24 28 C24 46 10 58 0 68 C-10 58 -24 46 -24 28 C-24 14 -13 4 0 4 Z" fill="url(#orangeGrad)" stroke="rgba(255,255,255,0.68)" stroke-width="2"/>
+          <circle cx="0" cy="28" r="12" fill="rgba(255,255,255,0.92)"/>
+          <text x="0" y="32" text-anchor="middle" font-size="13" font-weight="800" fill="#ff9f0a" font-family="Arial, sans-serif">B</text>
         </g>
       `;
 
-      const arrow = (x1, y1, x2, y2) => `
-        <g stroke="rgba(10, 132, 255, 0.55)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <path d="M ${x1} ${y1} L ${x2} ${y2}"/>
-          <path d="M ${x2 - 12} ${y2 - 10} L ${x2} ${y2} L ${x2 - 12} ${y2 + 10}"/>
+      const arrow = (x1, y1, x2, y2, color = "rgba(10, 132, 255, 0.55)") => {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const length = Math.hypot(dx, dy) || 1;
+        const ux = dx / length;
+        const uy = dy / length;
+        const baseX = x2 - ux * 14;
+        const baseY = y2 - uy * 14;
+        const wingX = -uy * 8;
+        const wingY = ux * 8;
+
+        return `
+          <g stroke="${color}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path d="M ${x1} ${y1} L ${x2} ${y2}"/>
+            <path d="M ${baseX + wingX} ${baseY + wingY} L ${x2} ${y2} L ${baseX - wingX} ${baseY - wingY}"/>
+          </g>
+        `;
+      };
+
+      const horizontalGuide = (x1, x2, y, dashed = false) => `
+        <path d="M ${x1} ${y} H ${x2}" stroke="rgba(127,138,157,0.34)" stroke-width="4" stroke-linecap="round" ${dashed ? 'stroke-dasharray="10 10"' : ""}/>
+      `;
+
+      const verticalGuide = (x, y1, y2, dashed = false) => `
+        <path d="M ${x} ${y1} V ${y2}" stroke="rgba(127,138,157,0.34)" stroke-width="4" stroke-linecap="round" ${dashed ? 'stroke-dasharray="10 10"' : ""}/>
+      `;
+
+      const distanceBadge = (x, y, width = 58) => `
+        <g filter="url(#softShadow)">
+          <rect x="${x - width / 2}" y="${y - 15}" width="${width}" height="30" rx="15" fill="rgba(255,255,255,0.92)" stroke="rgba(127,138,157,0.18)"/>
+          <circle cx="${x - 14}" cy="${y}" r="3.5" fill="rgba(127,138,157,0.45)"/>
+          <circle cx="${x}" cy="${y}" r="3.5" fill="rgba(127,138,157,0.45)"/>
+          <circle cx="${x + 14}" cy="${y}" r="3.5" fill="rgba(127,138,157,0.45)"/>
         </g>
       `;
 
-      const divider = (x) => `<rect x="${x}" y="78" width="10" height="132" rx="5" fill="rgba(127,138,157,0.18)"/>`;
+      const container = (x, y, w = 132, h = 102) => `
+        <g transform="translate(${x} ${y})" filter="url(#softShadow)">
+          <rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="24" fill="rgba(255, 159, 10, 0.18)" stroke="rgba(255, 159, 10, 0.65)" stroke-width="4"/>
+          <rect x="${-w / 2 + 12}" y="${-h / 2 + 12}" width="${w - 24}" height="${h - 24}" rx="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.30)" stroke-dasharray="8 6"/>
+          <circle cx="0" cy="${-h / 2 + 22}" r="14" fill="rgba(255,255,255,0.94)"/>
+          <text x="0" y="${-h / 2 + 27}" text-anchor="middle" font-size="13" font-weight="800" fill="#ff9f0a" font-family="Arial, sans-serif">B</text>
+        </g>
+      `;
+
+      const divider = (x) => `<rect x="${x}" y="82" width="10" height="126" rx="5" fill="rgba(127,138,157,0.16)"/>`;
 
       const scenes = {
         devant: `
-          ${orangeBlock(260, 172, 112, 84)}
-          ${blueCharacter(160, 132, 1.2)}
+          ${orangeLandmark(274, 160, 108, 80)}
+          ${blueMarker(156, 170, 1.16)}
+          ${horizontalGuide(182, 236, 198, true)}
+          ${distanceBadge(212, 198, 64)}
         `,
         derriere: `
-          ${blueCharacter(262, 124, 1.05)}
-          ${orangeBlock(260, 170, 122, 94)}
+          ${blueMarker(248, 164, 1)}
+          ${orangeLandmark(210, 168, 142, 100)}
+          ${horizontalGuide(236, 286, 204, true)}
         `,
         droite: `
-          ${orangeBlock(162, 170)}
-          ${blueCharacter(286, 132, 1.18)}
+          ${orangeLandmark(150, 168, 108, 80)}
+          ${blueMarker(298, 170, 1.16)}
+          ${horizontalGuide(188, 270, 198)}
+          ${arrow(222, 198, 270, 198)}
         `,
         gauche: `
-          ${orangeBlock(258, 170)}
-          ${blueCharacter(134, 132, 1.18)}
+          ${orangeLandmark(270, 168, 108, 80)}
+          ${blueMarker(122, 170, 1.16)}
+          ${horizontalGuide(150, 232, 198)}
+          ${arrow(198, 198, 150, 198)}
         `,
         toutdroit: `
-          ${orangeBlock(210, 112, 88, 68)}
-          ${blueCharacter(210, 194, 1.08)}
-          ${arrow(210, 186, 210, 126)}
+          <path d="M150 226 L190 84" stroke="rgba(127,138,157,0.26)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M270 226 L230 84" stroke="rgba(127,138,157,0.26)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M210 228 L210 92" stroke="rgba(127,138,157,0.18)" stroke-width="3" stroke-dasharray="10 10"/>
+          ${orangeLandmark(210, 92, 90, 66)}
+          ${blueMarker(210, 178, 1.08)}
+          ${arrow(210, 176, 210, 122)}
+          ${arrow(188, 198, 188, 146)}
+          ${arrow(232, 198, 232, 146)}
         `,
         enface: `
-          ${blueCharacter(134, 142, 1.12)}
-          ${orangeCharacter(286, 142, 1.12, true)}
-          <path d="M158 162 C178 152 208 148 238 152" fill="none" stroke="rgba(127,138,157,0.28)" stroke-width="5" stroke-dasharray="8 10" stroke-linecap="round"/>
+          ${blueMarker(132, 164, 1.08)}
+          ${orangeMarker(290, 164, 1.08, true)}
+          ${horizontalGuide(164, 258, 190, true)}
+          ${arrow(170, 174, 208, 174)}
+          ${arrow(252, 174, 214, 174, "rgba(255, 159, 10, 0.55)")}
         `,
         acote: `
-          ${orangeBlock(246, 170, 92, 70)}
-          ${blueCharacter(162, 132, 1.16)}
-          <rect x="200" y="118" width="8" height="96" rx="4" fill="rgba(127,138,157,0.12)"/>
+          <rect x="132" y="204" width="160" height="10" rx="5" fill="rgba(127,138,157,0.12)"/>
+          ${blueMarker(156, 166, 1.12)}
+          ${orangeLandmark(242, 168, 94, 72)}
         `,
         entre: `
-          ${orangeBlock(116, 170, 84, 64)}
-          ${orangeBlock(304, 170, 84, 64)}
-          ${blueCharacter(210, 132, 1.16)}
+          ${orangeLandmark(110, 168, 86, 66)}
+          ${orangeLandmark(310, 168, 86, 66)}
+          <rect x="154" y="118" width="112" height="88" rx="20" fill="rgba(10,132,255,0.06)" stroke="rgba(10,132,255,0.16)" stroke-dasharray="8 8"/>
+          ${blueMarker(210, 170, 1.14)}
         `,
         sur: `
-          ${orangeBlock(210, 186, 122, 68)}
-          ${blueCharacter(210, 92, 1.06)}
+          ${orangeLandmark(210, 190, 132, 58)}
+          ${blueMarker(210, 112, 1.02)}
+          ${verticalGuide(210, 136, 158, true)}
         `,
         sous: `
-          ${orangeBlock(210, 122, 122, 68)}
-          ${blueCharacter(210, 182, 1.06)}
+          ${orangeLandmark(210, 118, 132, 58)}
+          ${blueMarker(210, 192, 1.02)}
+          ${verticalGuide(210, 146, 168, true)}
         `,
         dans: `
-          ${orangeBlock(210, 160, 140, 110)}
-          <rect x="160" y="118" width="100" height="84" rx="20" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)"/>
-          ${blueCharacter(210, 128, 0.92)}
+          ${container(210, 162, 140, 112)}
+          ${blueMarker(210, 170, 0.84)}
         `,
         pres: `
-          ${orangeBlock(236, 170, 96, 72)}
-          ${blueCharacter(164, 132, 1.14)}
+          ${blueMarker(154, 170, 1.08)}
+          ${orangeLandmark(246, 170, 96, 72)}
+          ${horizontalGuide(182, 214, 200)}
+          ${distanceBadge(198, 200, 48)}
         `,
         loin: `
-          ${orangeBlock(316, 172, 88, 68)}
-          ${blueCharacter(92, 132, 1.14)}
-          <path d="M136 176 H270" stroke="rgba(127,138,157,0.3)" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
+          ${blueMarker(96, 170, 1.08)}
+          ${orangeLandmark(320, 170, 90, 68)}
+          ${horizontalGuide(124, 286, 200, true)}
+          ${distanceBadge(206, 200, 84)}
         `,
         enhaut: `
           ${divider(205)}
-          ${orangeBlock(210, 206, 94, 70)}
-          ${blueCharacter(210, 62, 1.06)}
+          ${orangeLandmark(210, 200, 98, 70)}
+          ${blueMarker(210, 78, 1.02)}
+          ${arrow(210, 170, 210, 110)}
         `,
         enbas: `
           ${divider(205)}
-          ${orangeBlock(210, 94, 94, 70)}
-          ${blueCharacter(210, 190, 1.06)}
+          ${orangeLandmark(210, 98, 98, 70)}
+          ${blueMarker(210, 198, 1.02)}
+          ${arrow(210, 126, 210, 182)}
         `
       };
 
